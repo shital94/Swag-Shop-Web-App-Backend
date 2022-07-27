@@ -1,12 +1,12 @@
 package com.revature.services;
 
-import com.revature.dtos.UserDto;
 import com.revature.models.User;
 import com.revature.repositories.UserRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -25,15 +25,8 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public void resetPW(UserDto userDto) {
-        System.out.println("USERDTO" + userDto);
-        Optional<User> newUser = userRepository.findByEmailAndPassword(userDto.getEmail(), userDto.getCurrPW());
-        if (newUser.isPresent()) {
-            if (userDto.getNewPW().equals(userDto.getReNewPW())) {
-                newUser.get().setPassword(userDto.getNewPW());
-                userRepository.save(newUser.get());
-            }
-        }
-
+    public List<User> getUsers() {
+        return userRepository.findAll();
     }
+
 }
