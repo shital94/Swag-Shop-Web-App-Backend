@@ -37,18 +37,18 @@ public class ProductController {
     }
 
 
-    @PostMapping("/create-item")
-    public void resetPW(
-            @RequestBody Product product
-    ) {
-        productService.createItem(product);
-    }
-
-    @PatchMapping("/update-item/{id}")
-    public void updateItem(@PathVariable("id") int id,
-                           @RequestBody Product product) {
-        productService.updateItem(id, product);
-    }
+//    @PostMapping("/create-item")
+//    public void resetPW(
+//            @RequestBody Product product
+//    ) {
+//        productService.createItem(product);
+//    }
+//
+//    @PatchMapping("/update-item/{id}")
+//    public void updateItem(@PathVariable("id") int id,
+//                           @RequestBody Product product) {
+//        productService.updateItem(id, product);
+//    }
 
     @Authorized
     @GetMapping("/{id}")
@@ -65,41 +65,7 @@ public class ProductController {
     @PutMapping
     public ResponseEntity<Product> upsert(@RequestBody Product product) {
         System.out.println(product);
-
-        if (product.getId() == 0) {
-            Product item = new Product();
-            item.setQuantity(product.getQuantity());
-            item.setPrice(product.getPrice());
-            item.setDescription(product.getDescription());
-            item.setImage(product.getImage());
-            item.setName(product.getName());
-
-            productRepository.save(item);
-
-            return ResponseEntity.ok(productService.save(item));
-        }
-        else {
-            Optional<Product> updatedProduct = productRepository.findById(product.getId());
-
-            updatedProduct.get().setQuantity(product.getQuantity());
-            if (product.getPrice() != 0) {
-                updatedProduct.get().setPrice(product.getPrice());
-            }
-            if (product.getDescription() != null) {
-                updatedProduct.get().setDescription(product.getDescription());
-            }
-            if (product.getImage() != null) {
-                updatedProduct.get().setImage(product.getImage());
-            }
-            if (product.getName() != null) {
-                updatedProduct.get().setName(product.getName());
-            }
-
-            productRepository.save(updatedProduct.get());
-
-            return ResponseEntity.ok(productService.save(updatedProduct.get()));
-        }
-//        return ResponseEntity.ok(productService.save(product));
+        return ResponseEntity.ok(productService.save(product));
     }
 
     @Authorized
