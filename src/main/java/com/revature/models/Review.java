@@ -24,4 +24,6 @@ public class Review {
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
+    @Transient
+    private String productId;
 }

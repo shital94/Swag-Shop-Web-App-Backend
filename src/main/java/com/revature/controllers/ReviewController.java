@@ -16,8 +16,9 @@ public class ReviewController {
     @Autowired
     private ReviewService reviewService;
 
-    @PostMapping("/create-item")
+    @PostMapping("/create-review")
     public void createItem(@RequestBody Review review){
+        System.out.println(review);
         reviewService.createReview(review);
     }
     @Authorized
